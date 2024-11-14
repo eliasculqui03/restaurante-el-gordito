@@ -19,9 +19,14 @@ Route::middleware('auth')->group(function () {
 
 
 
+
     Route::resource('users', UserController::class)->names([
         'index' => 'users.index'
     ]);
+});
+
+Route::get('/empresas/index', function () {
+    return view('empresa.index');
 });
 
 

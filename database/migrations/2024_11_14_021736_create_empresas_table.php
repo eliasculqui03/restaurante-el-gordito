@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('empresas', function (Blueprint $table) {      
-            $table->id();  
+        Schema::create('empresas', function (Blueprint $table) {
+            $table->id();
             $table->string('tipo_actividad')->nullable();
             $table->string('razon_social', 55);
             $table->string('ruc', 11)->unique();
@@ -29,6 +29,13 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('youtube')->nullable();
             $table->string('whatsapp')->nullable();
+            $table->string('nombre_gerente')->nullable();
+            $table->string('dni_gerente')->nullable();
+            $table->string('telefono_gerente')->nullable();
+            $table->string('email_gerente')->nullable();
+            $table->string('fecha_nacimiento_gerente')->nullable();
+            $table->string('direccion_gerente')->nullable();
+            $table->date('fecha_ingreso_gerente')->nullable();
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });

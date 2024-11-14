@@ -42,7 +42,7 @@
                             <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
                         </svg>
                         <span class="mx-1">
-                            <svg class="text-gray-400 shrink-0 size-3 dark:text-white/60"
+                            <svg class="text-gray-400 shrink-0 size-3 dark:text-white"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -68,11 +68,66 @@
                     <span class="sr-only">Search</span>
                 </button>
 
+                <button id="theme-toggle"
+                    class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                    aria-label="Toggle theme">
+                    <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" stroke="white"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="4" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></circle>
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+
+                <script>
+                    function setTheme(theme) {
+                        if (theme === 'dark') {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                        localStorage.setItem('color-theme', theme);
+                        updateIcon(theme);
+                    }
+
+                    function updateIcon(theme) {
+                        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+                        const lightIcon = document.getElementById('theme-toggle-light-icon');
+                        if (theme === 'dark') {
+                            darkIcon.classList.add('hidden');
+                            lightIcon.classList.remove('hidden');
+                        } else {
+                            lightIcon.classList.add('hidden');
+                            darkIcon.classList.remove('hidden');
+                        }
+                    }
+
+                    function toggleTheme() {
+                        const currentTheme = localStorage.getItem('color-theme');
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        setTheme(newTheme);
+                    }
+
+                    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+                    const savedTheme = localStorage.getItem('color-theme');
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+                    setTheme(initialTheme);
+                </script>
+
                 <button type="button"
                     class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
                         <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                     </svg>
